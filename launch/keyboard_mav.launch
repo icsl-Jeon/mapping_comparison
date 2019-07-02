@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+    <arg name="world_name" default="map3"/>
+    <arg name="mav_name" default="firefly"/>
+
+    <!--environment generation-->
+    <include file="$(find mav_mapping_comp)/launch/env_gen_voxblox.launch">        
+        <arg name="mav_name" value="$(arg mav_name)"/>
+        <arg name="target_name" value="target"/>
+        <arg name="world_name" value="$(arg world_name)"/>
+    
+    </include>
+
+	<group ns ="$(arg mav_name)">
+        <node name="waypoint_publisher_from_key" pkg="path_planner" type="waypoint_publisher_from_key" output="screen">
+		<param name="x" value="1.0" type="double"/>
+        <param name="y" value="0.0" type="double"/>
+        <param name="z" value="2.0" type="double"/>
+
+        </node>
+        <node name="keypress_interface" pkg="path_planner" type="keypress.py" output="screen" launch-prefix="xterm -e" />
+    </group>
+
+
+
+</launch>
