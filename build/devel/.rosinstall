@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/jbs/catkin_ws/src/mav_mapping_comp/build/devel/setup.sh
