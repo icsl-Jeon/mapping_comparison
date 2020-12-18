@@ -141,7 +141,6 @@ int main (int argc,char** argv){
                 curPnt.y() = y;
                 curPnt.z() = height;
                 voxbloxServer.getEsdfMapPtr()->getDistanceAtPosition(Eigen::Vector3d(x,y,height),&dist);
-                distmap_ptr->getDistance(curPnt);
             }
         t1 = steady_clock::now();
         queryTimeVoxblox = duration_cast<nanoseconds>(t1-t0).count();
