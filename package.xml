@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>mav_mapping_comp</name>
+  <name>mapping_comparison</name>
   <version>0.0.0</version>
   <description>The mav_mapping_comp package</description>
 

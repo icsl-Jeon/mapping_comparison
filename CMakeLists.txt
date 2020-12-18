@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(mav_mapping_comp)
+project(mapping_comparison)
 
 
 # ROS 
@@ -36,8 +36,8 @@ catkin_package(
  LIBRARIES mav_mapping_comp
 )
 
-add_executable(vsf_mapping_comparison src/vsf_mapping_comparison.cpp )
-target_link_libraries(vsf_mapping_comparison ${catkin_LIBRARIES} )
+add_executable(mapping_comparison src/vsf_mapping_comparison.cpp )
+target_link_libraries(mapping_comparison ${catkin_LIBRARIES} )
 
 add_executable(pcd_to_pointcloud src/pcd_to_pointcloud.cpp )
 target_link_libraries(pcd_to_pointcloud ${catkin_LIBRARIES} )

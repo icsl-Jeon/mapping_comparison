@@ -10,7 +10,6 @@
 #include <octomap/octomap_types.h>
 #include <octomap/OcTree.h>
 #include <octomap/octomap.h>
-#include "Utils.h"
 using namespace std::chrono;
 using namespace std;
 

@@ -5,7 +5,7 @@ with respect to Euclidean distance field (EDF).
 Specifically, we compare the time taken to compute EDF from octomap or TSDT along with the query time when traversing the EDF. 
 The nodes included are twofold: 1) a pointcloud publisher from pcd file, and a node where 
  each server for mapping is included, and we query by traversing in a grid way.
-As the EDF from octomap does not include visualization, I coded :)
+As the EDF from octomap does not include visualization for rviz, I coded :) 
  
 
 
