@@ -1,8 +1,0 @@
-prefix=/usr/local
-
-Name: mav_mapping_comp
-Description: Description of mav_mapping_comp
-Version: 0.0.0
-Cflags: 
-Libs: -L/usr/local/lib -lmav_mapping_comp
-Requires: 

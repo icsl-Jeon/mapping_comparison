@@ -1,8 +1,0 @@
-prefix=/home/jbs/catkin_ws/src/mav_mapping_comp/build/devel
-
-Name: mav_mapping_comp
-Description: Description of mav_mapping_comp
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/jbs/catkin_ws/src/mav_mapping_comp/build/devel/lib -lmav_mapping_comp
-Requires: 

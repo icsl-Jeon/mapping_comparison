@@ -3,7 +3,8 @@ project(mav_mapping_comp)
 
 
 # ROS 
-find_package(catkin REQUIRED roscpp 
+find_package(catkin REQUIRED roscpp
+        voxblox_ros octomap_ros octomap_server
  octomap_msgs 
 )
 include_directories(
@@ -35,7 +36,9 @@ catkin_package(
  LIBRARIES mav_mapping_comp
 )
 
-#Build 
-add_executable(octomap2edf_node src/octomap2edf_main.cpp)
-target_link_libraries(octomap2edf_node ${catkin_LIBRARIES})
+add_executable(vsf_mapping_comparison src/vsf_mapping_comparison.cpp )
+target_link_libraries(vsf_mapping_comparison ${catkin_LIBRARIES} )
+
+add_executable(pcd_to_pointcloud src/pcd_to_pointcloud.cpp )
+target_link_libraries(pcd_to_pointcloud ${catkin_LIBRARIES} )
 

@@ -1,0 +1,54 @@
+<launch>
+
+    <arg name="pcd_file" value = "/media/jbs/Samsung_T5/2021/Dual/pcd/factoryMappingTransformed.pcd"/>
+    <arg name = "resolution" value = "0.2" />
+    <arg name = "max_range" value = "20.0"/>
+    <arg name = "max_obstacle_distance" value = "5"/>
+    <arg name = "slice_level" value="0.7"/>
+
+    <!--publish pointcloud in /cloud_in (octomap) topic and /pointcloud (voxblox)-->
+    <node name = "pcl_publisher_octomap" pkg="multi_chaser" type="pcd_to_pointcloud" >
+        <param name = "pcd_file" value="$(find mapping_comparison)/map/factoryMappingTransformed.pcd"/>
+        <param name="x_max" value="20"/>
+        <param name="y_max" value="20"/>
+        <param name="z_max" value="5"/>
+        <param name="x_min" value="-10"/>
+        <param name="y_min" value="-10"/>
+        <param name="z_min" value="-2"/>
+    </node>
+
+
+
+    <node name = "vsf_mapping_comparison" pkg = "multi_chaser" type="vsf_mapping_comparison"
+    output="screen">
+
+        <!--octomap -->
+        <param name = "resolution" value="$(arg resolution)"/>
+        <param name="sensor_model/max_range" value="$(arg max_range)"/>
+        <param name = "cutoff_distance" value="(arg max_obstacle_distance)"/>
+        <param name = "edf_slice_level" value="$(arg slice_level)"/>
+
+        <!--voxblox -->
+        <param name="tsdf_voxels_per_side" value="16" />
+        <param name="publish_slices" value="true" />
+        <param name="publish_pointclouds" value="true" />
+        <param name="pointcloud_queue_size" value="3" />
+
+        <param name="publish_tsdf_map" value="true" />
+        <param name="publish_esdf_map" value="true" />
+        <param name="update_mesh_every_n_sec" value="0.1" />
+        <param name="method" value="fast" />
+        <param name ="esdf_max_distance_m"  value = "$(arg max_obstacle_distance)"/>
+        <param name="max_ray_length_m" value="$(arg max_range)"/>
+        <param name= "tsdf_voxel_size" value="$(arg resolution)"/>
+        <param name= "verbose" value="true" />
+        <param name= "world_frame" value="map" />
+        <param name = "slice_level" value="$(arg slice_level)"/>
+
+    </node>
+
+    <node pkg="tf" type="static_transform_publisher" name="tf_dummy" args="0 0 0 0 0 0 /map /base_link 100" />
+
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find multi_chaser)/rviz/rviz.rviz"/>
+
+</launch>
