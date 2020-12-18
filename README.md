@@ -33,7 +33,7 @@ The tunable arguments for the second node are mainly:
 
 Disclaimer:
 I am not an expert in mapping. In this package, I just used the out-of-box API provided by the two libraries. 
-Also, I just did not include the pointcloud insertion load from pointcloud (TODO). Currently, the time is tracke only in voxblox package. 
+Also, I just did not include the pointcloud insertion load of octomap from pointcloud (TODO). Currently, the time is tracked only in voxblox package. 
 
 Launch the below: 
 
