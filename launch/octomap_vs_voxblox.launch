@@ -1,7 +1,7 @@
 <launch>
 
     <arg name="pcd_file" value = "/media/jbs/Samsung_T5/2021/Dual/pcd/factoryMappingTransformed.pcd"/>
-    <arg name = "resolution" value = "0.2" />
+    <arg name = "resolution" value = "0.4" />
     <arg name = "max_range" value = "20.0"/>
     <arg name = "max_obstacle_distance" value = "5"/>
     <arg name = "slice_level" value="0.7"/>
@@ -37,7 +37,7 @@
         <param name="publish_tsdf_map" value="true" />
         <param name="publish_esdf_map" value="true" />
         <param name="update_mesh_every_n_sec" value="0.1" />
-        <param name="method" value="fast" />
+        <param name="method" value="merged" />
         <param name ="esdf_max_distance_m"  value = "$(arg max_obstacle_distance)"/>
         <param name="max_ray_length_m" value="$(arg max_range)"/>
         <param name= "tsdf_voxel_size" value="$(arg resolution)"/>
