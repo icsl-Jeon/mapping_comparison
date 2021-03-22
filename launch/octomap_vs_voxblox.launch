@@ -1,6 +1,7 @@
 <launch>
 
-    <arg name="pcd_file" value = "/media/jbs/Samsung_T5/2021/Dual/pcd/factoryMappingTransformed.pcd"/>
+<!--    <arg name="pcd_file" value = "/media/jbs/Samsung_T5/2021/Dual/pcd/factoryMappingTransformed.pcd"/>-->
+    <arg name="pcd_file" value = "/home/jbs/catkin_ws/src/auto_chaser2/map/test1/MetroPCL1.pcd"/>
     <arg name = "resolution" value = "0.4" />
     <arg name = "max_range" value = "20.0"/>
     <arg name = "max_obstacle_distance" value = "5"/>
@@ -8,15 +9,14 @@
 
     <!--publish pointcloud in /cloud_in (octomap) topic and /pointcloud (voxblox)-->
     <node name = "pcl_publisher_octomap" pkg="mapping_comparison" type="pcd_to_pointcloud" >
-        <param name = "pcd_file" value="$(find mapping_comparison)/map/factoryMappingTransformed.pcd"/>
-        <param name="x_max" value="20"/>
+        <param name = "pcd_file" value="$(arg pcd_file)"/>
+        <param name="x_max" value="40"/>
         <param name="y_max" value="20"/>
         <param name="z_max" value="5"/>
         <param name="x_min" value="-10"/>
-        <param name="y_min" value="-10"/>
-        <param name="z_min" value="-2"/>
+        <param name="y_min" value="-20"/>
+        <param name="z_min" value="-10"/>
     </node>
-
 
 
     <node name = "vsf_mapping_comparison" pkg = "mapping_comparison" type="mapping_comparison"
@@ -38,6 +38,8 @@
         <param name="publish_esdf_map" value="true" />
         <param name="update_mesh_every_n_sec" value="0.1" />
         <param name="method" value="merged" />
+        <param name="mesh_filename" value="jbs_mesh" />
+
         <param name ="esdf_max_distance_m"  value = "$(arg max_obstacle_distance)"/>
         <param name="max_ray_length_m" value="$(arg max_range)"/>
         <param name= "tsdf_voxel_size" value="$(arg resolution)"/>

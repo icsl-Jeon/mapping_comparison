@@ -24,7 +24,9 @@ int main(int argc, char** argv){
     cloud_filtered = static_cast<boost::shared_ptr<PointCloud<PointXYZ>>>(new PointCloud<PointXYZ>);
     ros::init(argc,argv,"pcd_to_pointcloud");
     ros::NodeHandle nh("~");
+
     std::string pcd_file = "/home/jbs/catkin_ws/src/multi_chaser/map/factoryMappingTransformed.pcd";
+    nh.param<string>("pcd_file",pcd_file,pcd_file);
     pcl::io::loadPCDFile<pcl::PointXYZ> (pcd_file, *cloud_ptr );
     cout<<"have loaded ground pcl of size "<< cloud_ptr->points.size()<<endl;
     double minX,maxX,minY,maxY,minZ,maxZ;
