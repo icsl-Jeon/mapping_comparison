@@ -7,7 +7,7 @@
     <arg name = "slice_level" value="0.7"/>
 
     <!--publish pointcloud in /cloud_in (octomap) topic and /pointcloud (voxblox)-->
-    <node name = "pcl_publisher_octomap" pkg="multi_chaser" type="pcd_to_pointcloud" >
+    <node name = "pcl_publisher_octomap" pkg="mapping_comparison" type="pcd_to_pointcloud" >
         <param name = "pcd_file" value="$(find mapping_comparison)/map/factoryMappingTransformed.pcd"/>
         <param name="x_max" value="20"/>
         <param name="y_max" value="20"/>
@@ -19,7 +19,7 @@
 
 
 
-    <node name = "vsf_mapping_comparison" pkg = "multi_chaser" type="vsf_mapping_comparison"
+    <node name = "vsf_mapping_comparison" pkg = "mapping_comparison" type="mapping_comparison"
     output="screen">
 
         <!--octomap -->
@@ -49,6 +49,6 @@
 
     <node pkg="tf" type="static_transform_publisher" name="tf_dummy" args="0 0 0 0 0 0 /map /base_link 100" />
 
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find multi_chaser)/rviz/rviz.rviz"/>
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find mapping_comparison)/rviz/voxblox.rviz"/>
 
 </launch>
