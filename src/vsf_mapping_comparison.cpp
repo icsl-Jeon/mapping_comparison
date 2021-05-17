@@ -82,14 +82,14 @@ int main (int argc,char** argv){
 
             printf("[octomap] dist field update took %ld[ms]\n", duration_cast<microseconds>(t1 - t0).count());
 
-            int bbx_nx = floor((xmax - xmin) /resolution);
+            int bbx_nx = floor((xmax - xmin) / resolution);
             int bbx_ny = floor((ymax - ymin) / resolution);
 
 
             edf_slice.points.clear();
             for (int nx = 0; nx <= bbx_nx; nx++)
                 for (int ny = 0; ny <= bbx_ny; ny++) {
-                    octomap::point3d pnt(xmin + nx * resolution, ymin + ny *resolution, height);
+                    octomap::point3d pnt(xmin + nx * resolution, ymin + ny * resolution, height);
                     geometry_msgs::Point point;
                     point.x = pnt.x();
                     point.y = pnt.y();
@@ -107,45 +107,45 @@ int main (int argc,char** argv){
                 }
             edf_slice.header.stamp = pcl_conversions::toPCL(ros::Time::now());
             pubEDFMarker.publish(edf_slice);
+
+
+            // query test
+
+//        int bbx_nx = floor((xmax - xmin) / resolution);
+//        int bbx_ny = floor((ymax - ymin) / resolution);
+            float curX, curY, curZ;
+            curZ = height;
+            octomap::point3d curPnt;
+            // octomap
+            t0 = steady_clock::now();
+            for (int nx = 0; nx <= bbx_nx; nx++)
+                for (int ny = 0; ny <= bbx_ny; ny++) {
+                    float x = xmin + resolution * nx;
+                    float y = ymin + resolution * ny;
+                    curPnt.x() = x;
+                    curPnt.y() = y;
+                    curPnt.z() = height;
+                    distmap_ptr->getDistance(curPnt);
+                }
+            t1 = steady_clock::now();
+            // voxblox
+            queryTimeOctomap = duration_cast<nanoseconds>(t1 - t0).count();
+            t0 = steady_clock::now();
+            double dist;
+            for (int nx = 0; nx <= bbx_nx; nx++)
+                for (int ny = 0; ny <= bbx_ny; ny++) {
+                    float x = xmin + resolution * nx;
+                    float y = ymin + resolution * ny;
+                    curPnt.x() = x;
+                    curPnt.y() = y;
+                    curPnt.z() = height;
+                    voxbloxServer.getEsdfMapPtr()->getDistanceAtPosition(Eigen::Vector3d(x, y, height), &dist);
+                }
+            t1 = steady_clock::now();
+            queryTimeVoxblox = duration_cast<nanoseconds>(t1 - t0).count();
+            ROS_INFO("query time (octomap vs voxblox) for %d block [ms] = %f vs %f \n ", bbx_nx * bbx_ny,
+                     queryTimeOctomap, queryTimeVoxblox);
         }
-
-
-        // query test
-
-        int bbx_nx = floor((xmax - xmin) / resolution);
-        int bbx_ny = floor((ymax - ymin) / resolution);
-        float curX, curY, curZ;
-        curZ = height;
-        octomap::point3d curPnt;
-        // octomap
-        t0 = steady_clock::now();
-        for (int nx = 0; nx <= bbx_nx; nx++)
-            for (int ny = 0; ny <= bbx_ny; ny++) {
-                float x = xmin + resolution*nx;
-                float y = ymin + resolution*ny;
-                curPnt.x() = x;
-                curPnt.y() = y;
-                curPnt.z() = height;
-                distmap_ptr->getDistance(curPnt);
-            }
-        t1 = steady_clock::now();
-        // voxblox
-        queryTimeOctomap = duration_cast<nanoseconds>(t1-t0).count();
-        t0 = steady_clock::now();
-        double dist;
-        for (int nx = 0; nx <= bbx_nx; nx++)
-            for (int ny = 0; ny <= bbx_ny; ny++) {
-                float x = xmin + resolution*nx;
-                float y = ymin + resolution*ny;
-                curPnt.x() = x;
-                curPnt.y() = y;
-                curPnt.z() = height;
-                voxbloxServer.getEsdfMapPtr()->getDistanceAtPosition(Eigen::Vector3d(x,y,height),&dist);
-            }
-        t1 = steady_clock::now();
-        queryTimeVoxblox = duration_cast<nanoseconds>(t1-t0).count();
-        ROS_INFO("query time (octomap vs voxblox) for %d block [ms] = %f vs %f \n ", bbx_nx*bbx_ny,queryTimeOctomap,queryTimeVoxblox);
-
         ros::spinOnce();
         ros::Rate(30).sleep();
 
